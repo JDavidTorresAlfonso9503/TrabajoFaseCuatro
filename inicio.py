@@ -35,3 +35,15 @@ ARCHIVO_LOGS = "logs_sistema.txt"
 # ======================================================================
 # ======================================================================
 
+
+# ======================================================================
+# ======================================================================
+# INTEGRANTE 2: Katerin Dayanna Gil
+# PARTE QUE LE TOCA:
+# - Clase abstracta Servicio
+# - 3 servicios especializados que heredan: ReservaSala, AlquilerEquipo, AsesoriaEspecializada
+# - Polimorfismo y métodos sobrecargados calcular_costo()
+# KATERIN DAYANNA
+# ======================================================================
+# ======================================================================
+
