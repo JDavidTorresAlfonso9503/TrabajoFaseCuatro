@@ -60,6 +60,45 @@ ARCHIVO_LOGS = "logs_sistema.txt"
 # ======================================================================
 # ======================================================================
 
+# Define la clase Reserva, que hereda los atributos y métodos de Entidad.
+class Reserva(Entidad):
+
+    # Constructor de la clase: recibe el identificador, cliente, servicio y duración de la reserva.
+    def __init__(self, id_reserva, cliente, servicio, duracion):
+
+        # Invoca el constructor de la clase padre Entidad e inicializa el identificador y nombre de la reserva.
+        super().__init__(id_reserva, f"Reserva-{id_reserva}")
+
+        # Almacena el objeto cliente asociado a la reserva.
+        self.cliente = cliente
+
+        # Almacena el objeto servicio que se desea reservar.
+        self.servicio = servicio
+
+        # Guarda la duración solicitada para la prestación del servicio.
+        self.duracion = duracion
+
+        # Establece el estado inicial de la reserva como Pendiente.
+        self.estado = "Pendiente"
+
+        # Inicializa el costo total de la reserva en cero.
+        self.costo_total = 0
+
+    # Define el método encargado de verificar las condiciones de validez de la reserva.
+    def validar(self):
+
+        # Comprueba que la duración de la reserva sea mayor que cero.
+        if self.duracion <= 0:
+
+            # Genera una excepción personalizada cuando la duración no es válida.
+            raise ReservaInvalidaError("Duración debe ser mayor a 0")
+
+        # Comprueba si el servicio seleccionado se encuentra disponible.
+        if not self.servicio.disponible:
+
+            # Genera una excepción personalizada cuando el servicio no está disponible.
+            raise ServicioNoDisponibleError(f"Servicio {self.servicio.nombre} no está disponible")
+          
 
 # ======================================================================
 # ======================================================================
