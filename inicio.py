@@ -11,3 +11,9 @@ print("Katerin Daniela Castro Rojas")
 # Fase 4 - Programación 213023 - UNAD
 # Grupo de 4 integrantes - Trabajo colaborativo
 # ============================================================
+# INTEGRANTES:
+# 1. Juan David Torres
+# 2. Katerin Dayanna Gil
+# 3. Maria Fernanda Contreras
+# 4. Katherin Rojas
+# ============================================================
