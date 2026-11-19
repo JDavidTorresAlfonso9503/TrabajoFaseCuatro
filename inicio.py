@@ -46,8 +46,117 @@ ARCHIVO_LOGS = "logs_sistema.txt"
 # KATERIN DAYANNA
 # ======================================================================
 # ======================================================================
+class Servicio(Entidad):
+ #Crea la clase Servicio, que hereda de Entidad
+ def __init__(self, id_servicio, nombre, precio_base, disponible=True):
+  #Inicializa los datos principales del servicio.
+  super().__init__(id_servicio, nombre)
+  #Hereda el identificador y el nombre de la clase Entidad.
+  self._precio_base = precio_base
+  #Guarda el precio base del servicio.
+  self._disponible = disponible
+  #Indica si el servicio esta disponible.
 
+@property
+def disponible(self):
+ return self._disponible
+#Permite consultar si el servicio esta disponible.
 
+@disponible.setter
+def disponible(self, valor):
+ self._disponible = valor
+ #permite modificar el estado de la disponibilidad.
+
+@abstractmethod
+    def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
+        pass
+ #Define un metodo abstracto que las clases hijas deben implementar.
+
+@abstractmethod
+    def validar(self):
+        pass
+ #Obliga a las clases hijas a crear sus propias validaciones.
+     
+ def calcular_costo_con_opciones(self, duracion=1, impuesto=0, descuento=0):
+ #Crea un metodo general para calcular el costo del servicio.
+        base = self._precio_base * duracion
+  #Multiplica el precio base por la duracion.
+        total = base + (base * impuesto / 100) - descuento
+  #Calcula el valor total aplicando impuesto y descuento.
+        return max(total, 0)   
+  #Devuelve el resueltado y evita que sea negativo.
+class ReservaSala(Servicio):
+#Crea la clase ReservaSala, que hereda de Servicio.
+    def __init__(self, id_servicio, nombre, precio_base, capacidad, disponible=True):
+  #Recibe los datos necesarios para crear una reserva de la sala.
+        super().__init__(id_servicio, nombre, precio_base, disponible)
+  #Hereda los atributos de la clase Servicio.
+        self.capacidad = capacidad
+  #Guarda la capacidad de la sala.
+        self.validar()
+  #Ejecuta las validaciones de la sala.
+ 
+def validar(self):
+#Define las conndiones para validar la sala.
+        if self._precio_base <= 0:
+         #Comprueba que el precio sea mayor que cero.
+            raise DatosInvalidosError("Precio base de sala debe ser > 0")
+         #Genera un error si el precio no es valido.
+        if self.capacidad <= 0:
+         #Comprueba que la capacidad sea mayor que cero.
+            raise DatosInvalidosError("Capacidad de sala debe ser > 0")
+         #Genera un eror si la capacidad no es valida.
+
+def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
+ #Define como se calcula el costo de reservar una sala.
+        imp = impuesto if impuesto is not None else 19
+        desc = descuento if descuento is not None else 0
+        return self.calcular_costo_con_opciones(duracion, imp, desc)
+
+def describir(self):
+        return f"Sala [{self.id}] {self.nombre} | Capacidad: {self.capacidad} | Precio/hora: ${self._precio_base} | Disponible: {self._disponible}"
+
+class AlquilerEquipo(Servicio):
+    def __init__(self, id_servicio, nombre, precio_base, cantidad_stock, disponible=True):
+        super().__init__(id_servicio, nombre, precio_base, disponible)
+        self.cantidad_stock = cantidad_stock
+        self.validar()
+
+    def validar(self):
+        if self._precio_base <= 0:
+            raise DatosInvalidosError("Precio base de equipo debe ser > 0")
+        if self.cantidad_stock < 0:
+            raise DatosInvalidosError("Stock no puede ser negativo")
+ 
+  def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
+        imp = impuesto if impuesto is not None else 19
+        desc = descuento if descuento is not None else 0
+        if duracion >= 5:
+            desc += self._precio_base * duracion * 0.10
+        return self.calcular_costo_con_opciones(duracion, imp, desc)
+
+    def describir(self):
+        return f"Equipo [{self.id}] {self.nombre} | Stock: {self.cantidad_stock} | Precio/día: ${self._precio_base} | Disponible: {self._disponible}"
+
+class AsesoriaEspecializada(Servicio):
+    def __init__(self, id_servicio, nombre, precio_base, especialista, disponible=True):
+        super().__init__(id_servicio, nombre, precio_base, disponible)
+        self.especialista = especialista
+        self.validar()
+     
+ def validar(self):
+        if self._precio_base <= 0:
+            raise DatosInvalidosError("Precio base de asesoría debe ser > 0")
+        if not self.especialista or len(self.especialista.strip()) < 3:
+            raise DatosInvalidosError("Especialista inválido")
+
+   def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
+        imp = impuesto if impuesto is not None else 19
+        desc = descuento if descuento is not None else 0
+        return self.calcular_costo_con_opciones(duracion, imp, desc)
+
+    def describir(self):
+        return f"Asesoría [{self.id}] {self.nombre} | Especialista: {self.especialista} | Precio/hora: ${self._precio_base} | Disponible: {self._disponible}"
 
 # ======================================================================
 # ======================================================================
