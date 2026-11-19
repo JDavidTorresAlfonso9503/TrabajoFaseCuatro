@@ -17,3 +17,21 @@ print("Katerin Daniela Castro Rojas")
 # 3. Maria Fernanda Contreras
 # 4. Katherin Rojas
 # ============================================================
+from abc import ABC, abstractmethod
+from datetime import datetime
+import traceback
+
+ARCHIVO_LOGS = "logs_sistema.txt"
+
+# ======================================================================
+# ======================================================================
+# INTEGRANTE 1: Juan David Torres Alfonso
+# PARTE QUE LE TOCA:
+# - Función de registro de logs
+# - Excepciones personalizadas
+# - Clase abstracta general Entidad
+# - Clase Cliente con encapsulación y validaciones
+# JUAN DAVID TORRES ALFONSO
+# ======================================================================
+# ======================================================================
+
