@@ -266,29 +266,50 @@ def validar(self):
 def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
  #Define como se calcula el costo de reservar una sala.
         imp = impuesto if impuesto is not None else 19
+ #Establece el impuesto en 19% cuando no se proporciona otro valor.
         desc = descuento if descuento is not None else 0
+ #Establece el descuento en cero si no se proporciona uno.
         return self.calcular_costo_con_opciones(duracion, imp, desc)
+ #Llama al metodo general de calculo de costos y devuelve el resultado.
+ 
 
 def describir(self):
+#Define el metodo que permite mostrar la informacion de la sala.
         return f"Sala [{self.id}] {self.nombre} | Capacidad: {self.capacidad} | Precio/hora: ${self._precio_base} | Disponible: {self._disponible}"
+ #Devuelve la informacion de la sala, incluyendo el identificador, nombre, capacidad, precio por hora.
 
 class AlquilerEquipo(Servicio):
+#Crea la clase AlquilerEquipo, que hereda las caracteristicas del servicio y permite administrar el alquiler de equipos.
     def __init__(self, id_servicio, nombre, precio_base, cantidad_stock, disponible=True):
+    #Es el contructor que recibe los datos del equipo, incluyendo su cantidad en inventario.
         super().__init__(id_servicio, nombre, precio_base, disponible)
+     #Reutiliza el constructor de la clase de servicio para inicializar los datos generales.
         self.cantidad_stock = cantidad_stock
+     #Guarda la cantidad de equipos disponibles en el invemtario.
         self.validar()
+     #Ejecuta las validaciones para comprobar que el precio y el inventario sean correctos.
 
     def validar(self):
+    #Define el metodo que comprueba los datos de alquiler de equipos.
         if self._precio_base <= 0:
+        #Comprueba que el precio base sea mayor que cero.
             raise DatosInvalidosError("Precio base de equipo debe ser > 0")
+         #Genera un error si el precio del equipo es invalido.
         if self.cantidad_stock < 0:
+        #Comprueba que la cantidad de equipos no sea negativa.
             raise DatosInvalidosError("Stock no puede ser negativo")
+        #Genera un error si el inventario tiene una cantidad negativa.
  
   def calcular_costo(self, duracion=1, impuesto=None, descuento=None):
+   #Define el calculo del costo del alquiler de equipos.
         imp = impuesto if impuesto is not None else 19
+   #Establece el impuesto en 19% cuando no se proporciona otro valor.
         desc = descuento if descuento is not None else 0
+   #Establece el descuento en cero si no se proporciona uno.
         if duracion >= 5:
+        #Comprueba si el alquiler tiene una duracion de cinco dias o mas.
             desc += self._precio_base * duracion * 0.10
+        #Si se cumple la condicion anterior, calcula y agrega un descuento adicional del 10%.
         return self.calcular_costo_con_opciones(duracion, imp, desc)
 
     def describir(self):
