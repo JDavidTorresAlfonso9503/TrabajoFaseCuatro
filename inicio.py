@@ -351,6 +351,362 @@ class SistemaFJ:
 # - Función main() y ejecución del programa
 # - Verificación de que el sistema nunca se cae y prueba del logs
 # KATHERIN, 
+
+# Define la simulación de diez operaciones válidas e inválidas.
+def simulacion_10_operaciones(sistema):
+ # Muestra en consola el mensaje o la información indicada.
+ print("\n" + "="*60)
+ # Muestra en consola el mensaje o la información indicada.
+ print("SIMULACIÓN AUTOMÁTICA - 10 OPERACIONES")
+ # Muestra en consola el mensaje o la información indicada.
+ print("="*60)
+
+ # Op 1: Cliente válido
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  c1 = Cliente(1, "Juan David Torres", "juan@gmail.com", "3001234567", "1012345678")
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_cliente(c1)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op1 error: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op1 falló: {e}")
+
+ # Op 2: Cliente INVÁLIDO
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  c_malo = Cliente(2, "Ana", "correo-malo", "123", "abc")
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_cliente(c_malo)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op2 cliente inválido capturado: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op2 - Cliente inválido capturado: {e} | Causa: {e.__cause__}")
+
+ # Op 3: Cliente válido 2
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  c2 = Cliente(3, "Milena Muñoz", "milena@unad.edu.co", "3109876543", "1098765432")
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_cliente(c2)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op3 error: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op3 falló: {e}")
+
+ # Op 4: Sala válida
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  s1 = ReservaSala(1, "Sala de Juntas A", 50000, capacidad=20)
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_servicio(s1)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op4 error: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op4 falló: {e}")
+
+ # Op 5: Equipo válido
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  s2 = AlquilerEquipo(2, "Proyector Epson", 30000, cantidad_stock=5)
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_servicio(s2)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op5 error: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op5 falló: {e}")
+
+ # Op 6: Asesoría válida
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  s3 = AsesoriaEspecializada(3, "Asesoría en Python", 80000, especialista="Ing. Carlos Ruiz")
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_servicio(s3)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op6 error: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op6 falló: {e}")
+
+ # Op 7: Servicio INVÁLIDO
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  s_malo = ReservaSala(4, "Sala Mala", -1000, capacidad=0)
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.agregar_servicio(s_malo)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Registra en el archivo de logs el evento o error producido.
+  registrar_log(f"Op7 servicio inválido: {e}", True)
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op7 - Servicio inválido capturado: {e}")
+
+ # Op 8: Reserva EXITOSA
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.crear_reserva(1, sistema.clientes[0], sistema.servicios[0], duracion=2)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op8 falló: {e}")
+
+ # Op 9: Reserva FALLIDA duración 0
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.crear_reserva(2, sistema.clientes[0], sistema.servicios[1], duracion=0)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op9 - Reserva fallida capturada: {e}")
+
+ # Op 10: Reserva FALLIDA servicio no disponible + cancelar
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Calcula y asigna el valor correspondiente a la variable indicada.
+  sistema.servicios[1].disponible = False
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  sistema.crear_reserva(3, sistema.clientes[1], sistema.servicios[1], duracion=3)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"Op10 - Servicio no disponible capturado: {e}")
+ # Ejecuta este bloque siempre, haya ocurrido o no una excepción.
+ finally:
+  # Inicia un bloque protegido para controlar posibles excepciones.
+  try:
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if len(sistema.reservas) > 0:
+    # Ejecuta la instrucción indicada dentro del flujo del programa.
+    sistema.reservas[0].cancelar()
+  # Captura el tipo de excepción indicado para gestionar el error.
+  except Exception as e:
+   # Muestra en consola el mensaje o la información indicada.
+   print(f"Error al cancelar: {e}")
+
+ # Muestra en consola el mensaje o la información indicada.
+ print("\n--- Demostración métodos sobrecargados (calcular_costo) ---")
+ # Calcula y asigna el valor correspondiente a la variable indicada.
+ sala = sistema.servicios[0]
+ # Muestra en consola el mensaje o la información indicada.
+ print(f"Solo duración (2h): ${sala.calcular_costo(2):.2f}")
+ # Muestra en consola el mensaje o la información indicada.
+ print(f"Con impuesto 10%: ${sala.calcular_costo(2, impuesto=10):.2f}")
+ # Muestra en consola el mensaje o la información indicada.
+ print(f"Con impuesto 10% y descuento 5000: ${sala.calcular_costo(2, impuesto=10, descuento=5000):.2f}")
+
+ # Muestra en consola el mensaje o la información indicada.
+ print("\n Simulación terminada - El sistema SIGUE FUNCIONANDO aunque hubo errores")
+ # Registra en el archivo de logs el evento o error producido.
+ registrar_log("Simulación de 10 operaciones completada")
+
+# Define la función principal que inicia y administra la ejecución del programa.
+def main():
+ # Muestra en consola el mensaje o la información indicada.
+ print("="*60)
+ # Muestra en consola el mensaje o la información indicada.
+ print("SOFTWARE FJ - Sistema Integral de Gestión")
+ # Muestra en consola el mensaje o la información indicada.
+ print("Clientes, Servicios y Reservas | Sin Base de Datos")
+ # Muestra en consola el mensaje o la información indicada.
+ print("="*60)
+ # Registra en el archivo de logs el evento o error producido.
+ registrar_log("Inicio del sistema Software FJ")
+
+ # Calcula y asigna el valor correspondiente a la variable indicada.
+ sistema = SistemaFJ()
+ # Ejecuta la instrucción indicada dentro del flujo del programa.
+ simulacion_10_operaciones(sistema)
+
+ # Repite el bloque mientras la condición indicada sea verdadera.
+ while True:
+  # Muestra en consola el mensaje o la información indicada.
+  print("\n--- MENÚ ---")
+  # Muestra en consola el mensaje o la información indicada.
+  print("1. Ver todo (clientes, servicios, reservas)")
+  # Muestra en consola el mensaje o la información indicada.
+  print("2. Registrar cliente nuevo")
+  # Muestra en consola el mensaje o la información indicada.
+  print("3. Registrar servicio nuevo")
+  # Muestra en consola el mensaje o la información indicada.
+  print("4. Crear reserva nueva")
+  # Muestra en consola el mensaje o la información indicada.
+  print("5. Ver archivo de logs")
+  # Muestra en consola el mensaje o la información indicada.
+  print("0. Salir")
+  # Inicia un bloque protegido para controlar posibles excepciones.
+  try:
+   # Solicita información al usuario mediante la consola.
+   opcion = input("Elige una opción: ").strip()
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if opcion == "1":
+    # Ejecuta la instrucción indicada dentro del flujo del programa.
+    sistema.mostrar_todo()
+   # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+   elif opcion == "2":
+    # Inicia un bloque protegido para controlar posibles excepciones.
+    try:
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     id_c = int(input("ID cliente: "))
+     # Solicita información al usuario mediante la consola.
+     nom = input("Nombre: ")
+     # Solicita información al usuario mediante la consola.
+     cor = input("Correo: ")
+     # Solicita información al usuario mediante la consola.
+     tel = input("Teléfono: ")
+     # Solicita información al usuario mediante la consola.
+     doc = input("Documento: ")
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     c = Cliente(id_c, nom, cor, tel, doc)
+     # Ejecuta la instrucción indicada dentro del flujo del programa.
+     sistema.agregar_cliente(c)
+    # Captura el tipo de excepción indicado para gestionar el error.
+    except Exception as e:
+     # Registra en el archivo de logs el evento o error producido.
+     registrar_log(f"Error registrando cliente por menú: {e} | Causa: {e.__cause__}", True)
+     # Muestra en consola el mensaje o la información indicada.
+     print(f" No se pudo registrar: {e}")
+    # Ejecuta este bloque siempre, haya ocurrido o no una excepción.
+    finally:
+     # Muestra en consola el mensaje o la información indicada.
+     print("-> Intento de registro terminado, el sistema sigue vivo")
+   # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+   elif opcion == "3":
+    # Muestra en consola el mensaje o la información indicada.
+    print("Tipos: 1=Sala, 2=Equipo, 3=Asesoría")
+    # Solicita información al usuario mediante la consola.
+    tipo = input("Tipo: ")
+    # Inicia un bloque protegido para controlar posibles excepciones.
+    try:
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     id_s = int(input("ID servicio: "))
+     # Solicita información al usuario mediante la consola.
+     nom = input("Nombre: ")
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     precio = float(input("Precio base: "))
+     # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+     if tipo == "1":
+      # Calcula y asigna el valor correspondiente a la variable indicada.
+      cap = int(input("Capacidad: "))
+      # Calcula y asigna el valor correspondiente a la variable indicada.
+      s = ReservaSala(id_s, nom, precio, cap)
+     # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+     elif tipo == "2":
+      # Calcula y asigna el valor correspondiente a la variable indicada.
+      stock = int(input("Stock: "))
+      # Calcula y asigna el valor correspondiente a la variable indicada.
+      s = AlquilerEquipo(id_s, nom, precio, stock)
+     # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+     elif tipo == "3":
+      # Solicita información al usuario mediante la consola.
+      esp = input("Especialista: ")
+      # Calcula y asigna el valor correspondiente a la variable indicada.
+      s = AsesoriaEspecializada(id_s, nom, precio, esp)
+     # Ejecuta este bloque únicamente si el bloque try finalizó sin excepciones.
+     else:
+      # Lanza una excepción para informar que se presentó una condición no válida.
+      raise DatosInvalidosError("Tipo de servicio no válido")
+     # Ejecuta la instrucción indicada dentro del flujo del programa.
+     sistema.agregar_servicio(s)
+    # Captura el tipo de excepción indicado para gestionar el error.
+    except Exception as e:
+     # Registra en el archivo de logs el evento o error producido.
+     registrar_log(f"Error registrando servicio: {e}", True)
+     # Muestra en consola el mensaje o la información indicada.
+     print(f" No se pudo registrar servicio: {e}")
+   # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+   elif opcion == "4":
+    # Inicia un bloque protegido para controlar posibles excepciones.
+    try:
+     # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+     if not sistema.clientes or not sistema.servicios:
+      # Lanza una excepción para informar que se presentó una condición no válida.
+      raise ReservaInvalidaError("Debe haber al menos 1 cliente y 1 servicio")
+     # Muestra en consola el mensaje o la información indicada.
+     print("Clientes:")
+     # Recorre los elementos de la colección para procesarlos uno por uno.
+     for i, c in enumerate(sistema.clientes):
+      # Muestra en consola el mensaje o la información indicada.
+      print(f"{i}: {c.describir()}")
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     ic = int(input("Índice cliente: "))
+     # Muestra en consola el mensaje o la información indicada.
+     print("Servicios:")
+     # Recorre los elementos de la colección para procesarlos uno por uno.
+     for i, s in enumerate(sistema.servicios):
+      # Muestra en consola el mensaje o la información indicada.
+      print(f"{i}: {s.describir()}")
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     isv = int(input("Índice servicio: "))
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     dur = int(input("Duración: "))
+     # Calcula y asigna el valor correspondiente a la variable indicada.
+     id_r = len(sistema.reservas) + 10
+     # Ejecuta la instrucción indicada dentro del flujo del programa.
+     sistema.crear_reserva(id_r, sistema.clientes[ic], sistema.servicios[isv], dur)
+    # Captura el tipo de excepción indicado para gestionar el error.
+    except Exception as e:
+     # Registra en el archivo de logs el evento o error producido.
+     registrar_log(f"Error creando reserva por menú: {e}", True)
+     # Muestra en consola el mensaje o la información indicada.
+     print(f" No se pudo crear reserva: {e}")
+   # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+   elif opcion == "5":
+    # Inicia un bloque protegido para controlar posibles excepciones.
+    try:
+     # Abre el archivo indicado y garantiza su cierre al terminar el bloque.
+     with open(ARCHIVO_LOGS, "r", encoding="utf-8") as f:
+      # Muestra en consola el mensaje o la información indicada.
+      print("\n--- LOGS ---")
+      # Muestra en consola el mensaje o la información indicada.
+      print(f.read())
+    # Captura el tipo de excepción indicado para gestionar el error.
+    except FileNotFoundError:
+     # Muestra en consola el mensaje o la información indicada.
+     print("Aún no hay logs")
+   # Evalúa una condición alternativa cuando las anteriores no se cumplieron.
+   elif opcion == "0":
+    # Muestra en consola el mensaje o la información indicada.
+    print("Gracias por usar Software FJ. ¡Chao!")
+    # Registra en el archivo de logs el evento o error producido.
+    registrar_log("Cierre del sistema")
+    # Interrumpe el ciclo actual y continúa con la instrucción posterior al ciclo.
+    break
+   # Ejecuta este bloque únicamente si el bloque try finalizó sin excepciones.
+   else:
+    # Muestra en consola el mensaje o la información indicada.
+    print("Opción no válida, intenta de nuevo")
+  # Captura el tipo de excepción indicado para gestionar el error.
+  except Exception as e:
+   # Registra en el archivo de logs el evento o error producido.
+   registrar_log(f"Error inesperado en menú principal: {e}\n{traceback.format_exc()}", True)
+   # Muestra en consola el mensaje o la información indicada.
+   print(f" Error inesperado pero el sistema sigue: {e}")
+
+# Comprueba que el archivo se esté ejecutando directamente y no importando como módulo.
+if __name__ == "__main__":
+ # Ejecuta la instrucción indicada dentro del flujo del programa.
+ main()
+
 # ======================================================================
 # ======================================================================
 
