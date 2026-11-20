@@ -12,7 +12,7 @@ print("Katerin Daniela Castro Rojas")
 # Grupo de 4 integrantes - Trabajo colaborativo
 # ============================================================
 # INTEGRANTES:
-# 1. Juan David Torres
+# 1. Juan David Torres Alfonso
 # 2. Katerin Dayanna Gil
 # 3. Maria Fernanda Contreras
 # 4. Katherin Rojas
@@ -74,7 +74,7 @@ class ReservaInvalidaError(Exception):
 class ClienteInvalidoError(DatosInvalidosError):
  # Indica un bloque vacío; se utiliza como implementación provisional de este método.
  pass
- # --- Clase Cliente - Juan David Torres ---
+ # --- Clase Cliente - Juan David Torres Alfonso ---
 # Declara la clase Cliente, que agrupa los datos y comportamientos de este componente.
 class Cliente(Entidad):
  # Define el constructor e inicializa los atributos del objeto.
@@ -152,7 +152,7 @@ class Cliente(Entidad):
   # Devuelve el resultado de la operación o la información solicitada.
   return f"Cliente [{self.id}] {self.nombre} | Correo: {self.__correo} | Tel: {self.__telefono} | Doc: {self.__documento}"
 
-# --- Clase abstracta general - Juan David Torres ---
+# --- Clase abstracta general - Juan David Torres Alfonso ---
 # Declara la clase Entidad, que agrupa los datos y comportamientos de este componente.
 class Entidad(ABC):
  # Define el constructor e inicializa los atributos del objeto.
