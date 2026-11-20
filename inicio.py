@@ -34,7 +34,163 @@ ARCHIVO_LOGS = "logs_sistema.txt"
 # JUAN DAVID TORRES ALFONSO
 # ======================================================================
 # ======================================================================
+# Define la función que registra eventos y errores en el archivo de logs.
+def registrar_log(mensaje, es_error=False):
+ # Ejecuta la instrucción indicada dentro del flujo del programa.
+ """Guarda todo en logs_sistema.txt y no deja que el programa se caiga"""
+ # Inicia un bloque protegido para controlar posibles excepciones.
+ try:
+  # Obtiene la fecha y hora actuales con el formato establecido.
+  hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+  # Determina si el registro corresponde a un error o a un evento normal.
+  tipo = "ERROR" if es_error else "EVENTO"
+  # Construye la línea de texto que se guardará en el archivo de logs.
+  linea = f"[{hora}] [{tipo}] {mensaje}\n"
+  # Abre el archivo indicado y garantiza su cierre al terminar el bloque.
+  with open(ARCHIVO_LOGS, "a", encoding="utf-8") as f:
+   # Escribe el registro construido en el archivo de logs.
+   f.write(linea)
+ # Captura el tipo de excepción indicado para gestionar el error.
+ except Exception as e:
+  # Muestra en consola el mensaje o la información indicada.
+  print(f"No se pudo escribir en logs: {e}")
+  # --- Excepciones personalizadas - Juan David Torres ---
+# Declara la clase DatosInvalidosError, que agrupa los datos y comportamientos de este componente.
+class DatosInvalidosError(Exception):
+ # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+ pass
 
+# Declara la clase ServicioNoDisponibleError, que agrupa los datos y comportamientos de este componente.
+class ServicioNoDisponibleError(Exception):
+ # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+ pass
+
+# Declara la clase ReservaInvalidaError, que agrupa los datos y comportamientos de este componente.
+class ReservaInvalidaError(Exception):
+ # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+ pass
+
+# Declara la clase ClienteInvalidoError, que agrupa los datos y comportamientos de este componente.
+class ClienteInvalidoError(DatosInvalidosError):
+ # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+ pass
+ # --- Clase Cliente - Juan David Torres ---
+# Declara la clase Cliente, que agrupa los datos y comportamientos de este componente.
+class Cliente(Entidad):
+ # Define el constructor e inicializa los atributos del objeto.
+ def __init__(self, id_cliente, nombre, correo, telefono, documento):
+  # Invoca el constructor de la clase padre para inicializar los atributos heredados.
+  super().__init__(id_cliente, nombre)
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self.__correo = correo
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self.__telefono = telefono
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self.__documento = documento
+  # Ejecuta la instrucción indicada dentro del flujo del programa.
+  self.validar()
+
+ # Indica que el método siguiente permite consultar un atributo mediante una propiedad.
+ @property
+ # Define el método correo de la clase o módulo correspondiente.
+ def correo(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return self.__correo
+
+ # Indica que el método siguiente establece o modifica el valor de la propiedad.
+ @correo.setter
+ # Define el método correo de la clase o módulo correspondiente.
+ def correo(self, nuevo):
+  # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+  if "@" not in nuevo or "." not in nuevo:
+   # Lanza una excepción para informar que se presentó una condición no válida.
+   raise ClienteInvalidoError(f"Correo inválido: {nuevo}")
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self.__correo = nuevo
+
+ # Indica que el método siguiente permite consultar un atributo mediante una propiedad.
+ @property
+ # Define el método telefono de la clase o módulo correspondiente.
+ def telefono(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return self.__telefono
+
+ # Indica que el método siguiente permite consultar un atributo mediante una propiedad.
+ @property
+ # Define el método documento de la clase o módulo correspondiente.
+ def documento(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return self.__documento
+
+ # Define el método que comprueba que los datos cumplan las reglas establecidas.
+ def validar(self):
+  # Inicia un bloque protegido para controlar posibles excepciones.
+  try:
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if not self.nombre or len(self.nombre.strip()) < 3:
+    # Lanza una excepción para informar que se presentó una condición no válida.
+    raise ClienteInvalidoError("El nombre debe tener mínimo 3 caracteres")
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if "@" not in self.__correo or "." not in self.__correo:
+    # Lanza una excepción para informar que se presentó una condición no válida.
+    raise ClienteInvalidoError(f"Correo inválido: {self.__correo}")
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if not str(self.__telefono).isdigit() or len(str(self.__telefono)) < 7:
+    # Lanza una excepción para informar que se presentó una condición no válida.
+    raise ClienteInvalidoError(f"Teléfono inválido: {self.__telefono}")
+   # Evalúa la condición para decidir si se ejecuta el bloque siguiente.
+   if not str(self.__documento).isdigit():
+    # Lanza una excepción para informar que se presentó una condición no válida.
+    raise ClienteInvalidoError(f"Documento debe ser numérico: {self.__documento}")
+  # Captura el tipo de excepción indicado para gestionar el error.
+  except ClienteInvalidoError as e:
+   # Lanza una excepción para informar que se presentó una condición no válida.
+   raise DatosInvalidosError(f"Error al validar cliente {self.nombre}") from e
+
+ # Define el método que devuelve una descripción legible del objeto.
+ def describir(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return f"Cliente [{self.id}] {self.nombre} | Correo: {self.__correo} | Tel: {self.__telefono} | Doc: {self.__documento}"
+
+# --- Clase abstracta general - Juan David Torres ---
+# Declara la clase Entidad, que agrupa los datos y comportamientos de este componente.
+class Entidad(ABC):
+ # Define el constructor e inicializa los atributos del objeto.
+ def __init__(self, id_entidad, nombre):
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self._id = id_entidad
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self._nombre = nombre
+  # Asigna o actualiza un atributo del objeto con el valor indicado.
+  self._fecha_creacion = datetime.now()
+
+ # Indica que el método siguiente permite consultar un atributo mediante una propiedad.
+ @property
+ # Define el método id de la clase o módulo correspondiente.
+ def id(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return self._id
+
+ # Indica que el método siguiente permite consultar un atributo mediante una propiedad.
+ @property
+ # Define el método nombre de la clase o módulo correspondiente.
+ def nombre(self):
+  # Devuelve el resultado de la operación o la información solicitada.
+  return self._nombre
+
+ # Declara un método abstracto que las clases concretas deben implementar.
+ @abstractmethod
+ # Define el método que devuelve una descripción legible del objeto.
+ def describir(self):
+  # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+  pass
+
+ # Declara un método abstracto que las clases concretas deben implementar.
+ @abstractmethod
+ # Define el método que comprueba que los datos cumplan las reglas establecidas.
+ def validar(self):
+  # Indica un bloque vacío; se utiliza como implementación provisional de este método.
+  pass
 
 # ======================================================================
 # ======================================================================
